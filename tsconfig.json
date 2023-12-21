@@ -10,9 +10,9 @@
     "rootDir": "./src",
     "baseUrl": "./",
     "paths": {
-      "*": ["node_modules/*", "src/types/*"]
+      "*": ["node_modules/*", "src/types.ts/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/index.js"],
+  "include": ["src/**/*.ts", "src/index.ts"],
   "exclude": ["node_modules"]
 }
