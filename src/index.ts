@@ -1,5 +1,5 @@
 import { ApolloServer, gql } from "apollo-server";
-import { buildFederatedSchema } from "@apollo/federation";
+import { buildSubgraphSchema } from "@apollo/federation";
 import { CreateUserInput } from "./types";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -83,9 +83,12 @@ const resolvers = {
         (u) => u.email === email && u.password === password
       );
       if (user) {
-        const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY  || "8000");
+        const token = jwt.sign(
+          { userId: user.id },
+          process.env.SECRET_KEY || "8000"
+        );
         console.log("token", token);
-        
+
         return { ...user, token };
       } else {
         throw new Error("Invalid email or password");
@@ -100,10 +103,10 @@ const resolvers = {
 
 // Apollo server setup
 const server = new ApolloServer({
-  schema: buildFederatedSchema([{ typeDefs, resolvers }]),
+  schema: buildSubgraphSchema([{ typeDefs, resolvers }]),
 });
 
 // Start server
-server.listen({ port: 4001 }).then(({ url }: { url: string }) => {
+server.listen({ port: 5000 }).then(({ url }: { url: string }) => {
   console.log(`User service running at ${url}`);
 });
